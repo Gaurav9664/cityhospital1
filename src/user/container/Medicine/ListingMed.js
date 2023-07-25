@@ -7,11 +7,11 @@ function ListingMed({ mdata, handleCart1 }) {
     return (
         <>
             {
-                mdata.map((a, i) => {
+                mdata.map((v, i) => {
                     return (
                         <div className='col-md-4 g-3'>
                             <CustomCard
-                                value={a}
+                                value={v}
                                 onclick1={handleCart1}
                                 btnval={'Add to Cart'}
                             />
