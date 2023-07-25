@@ -3,7 +3,9 @@ import React from 'react';
 function NotFound(props) {
     return (
         <div>
-            <h1>hello Page Not Found</h1>
+            {
+                alert("Page Not Found")
+            }
         </div>
     );
 }

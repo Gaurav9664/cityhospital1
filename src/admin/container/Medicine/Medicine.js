@@ -1,91 +1,39 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { DataGrid } from '@mui/x-data-grid';
+import React from 'react';
 import { useEffect } from 'react';
-import IconButton from '@mui/material/IconButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { DataGrid } from '@mui/x-data-grid';
+import { addMedicineData, deleteMedicineData, getMedicineData, updateMedicineData } from '../../../redux/action/medicine.action';
+import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MedicineForm from './MedicineForm';
 
-
 function Medicine(props) {
-    const [items, setItems] = React.useState([]);
+
     const [update, setupdate] = React.useState(null);
 
+    const dispatch = useDispatch()
+    const medicineData = useSelector(state => state.medicine)
+    console.log(medicineData)
+
     useEffect(() => {
-        let localData = JSON.parse(localStorage.getItem("medicines"));
-
-        if (localData !== null) {
-            setItems(localData)
-        }
-
-    }, []);
-
-    const handlesubmitdata = (data) => {
-        console.log(data);
-
-        let rno = Math.floor(Math.random() * 1000);
-
-        let newData = { id: rno, ...data };
-
-        let localdata = JSON.parse(localStorage.getItem("medicines"));
-
-        console.log(localdata);
-
-        if (localdata === null) {
-            localStorage.setItem("medicines", JSON.stringify([newData]))
-            setItems([newData])
-        } else {
-            if (update) {
-                let udata = localdata.map((v, i) => {
-                    if (v.id === data.id) {
-                        return data;
-                    } else {
-                        return v;
-                    }
-                })
-                localStorage.setItem("medicines", JSON.stringify(udata))
-                setItems(udata)
-            } else {
-                localdata.push(newData)
-                localStorage.setItem("medicines", JSON.stringify(localdata))
-                setItems(localdata)
-            }
-
-        }
-
-
-    };
+        dispatch(getMedicineData())
+    }, [])
 
     const handleDelete = (id) => {
-        let localData = JSON.parse(localStorage.getItem("medicines"));
-
-        let fdata = localData.filter((v, i) => v.id !== id)
-
-        localStorage.setItem("medicines", JSON.stringify(fdata))
-
-        setItems(fdata)
+        console.log(id);
+        dispatch(deleteMedicineData(id))
     }
 
-    const handleupdate = (values) => {
-        setupdate(values) 
+    const handleupdate = (data) => {
+        setupdate(data)
     }
-
 
     const columns = [
-
-        // { field: 'id', headerName: 'ID', width: 130 },
         { field: 'name', headerName: 'Name', width: 130 },
-        { field: 'date', headerName: 'ExpiryDate', width: 130 },
         { field: 'price', headerName: 'Price', width: 130 },
-        { field: 'desc', headerName: 'Description', width: 130 },
+        { field: 'expiry', headerName: 'expiry', width: 130 },
+        { field: 'desc', headerName: 'desc', width: 230 },
         {
             field: 'action',
             headerName: 'Action',
@@ -103,24 +51,33 @@ function Medicine(props) {
             ),
 
         }
+    ]
 
-    ];
 
-
+    const handlesubmit = (data) => {
+        if (update) {
+            dispatch(updateMedicineData(data))
+        } else {
+            dispatch(addMedicineData(data))
+        }
+        setupdate(null)
+    }
     return (
+        <div>
+            <h1>Add Medicine</h1>
 
-        <>
-            <MedicineForm onhandlesubmit={handlesubmitdata} onupdate={update}/>
+            <MedicineForm onhandlesubmit={handlesubmit} onupdate={update} />
 
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={items}
+                    rows={medicineData.medicine}
                     columns={columns}
                     pageSizeOptions={[5, 10]}
                     checkboxSelection
                 />
+
             </div>
-        </>
+        </div>
     );
 }
 

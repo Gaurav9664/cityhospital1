@@ -8,7 +8,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import * as yup from 'yup'
 import Button from '@mui/material/Button';
 
-function MedReduxForm({ onhandlesubmit, onupdate }) {
+
+function AdminppointmentForm({ onhandlesubmit, onupdate }) {
+
     const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
@@ -27,12 +29,24 @@ function MedReduxForm({ onhandlesubmit, onupdate }) {
     };
 
 
+    let d = new Date();
+    let nd = new Date(d.setDate(d.getDate() - 1))
+
     let medicineschema = yup.object({
         name: yup.string().required(),
+        date: yup.date().min(nd, "please entre a valid date").required(),
         price: yup.number().required(),
-        expiry: yup.number().required(),
         desc: yup.string().required()
+            .test('desc', 'maxmium 3 word allowed.',
+                function (val) {
+                    let arr = val.split(" ")
 
+                    if (arr.length > 3) {
+                        return false
+                    } else {
+                        return true
+                    }
+                })
     });
 
     const formik = useFormik({
@@ -40,8 +54,8 @@ function MedReduxForm({ onhandlesubmit, onupdate }) {
 
         initialValues: {
             name: '',
+            date: '',
             price: '',
-            expiry: '',
             desc: ''
         },
         onSubmit: (values, action) => {
@@ -56,20 +70,22 @@ function MedReduxForm({ onhandlesubmit, onupdate }) {
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = formik;
 
 
+
     return (
         <>
-            <h1>medicine</h1>
+            <h1>Adminppointment</h1>
             <Button variant="outlined" onClick={handleClickOpen}>
-                Open form medicine
+                Open form Medicine
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>medicine</DialogTitle>
+                <DialogTitle>Medicine</DialogTitle>
                 <DialogContent>
                     <form onSubmit={handleSubmit}>
                         <TextField
+
                             margin="dense"
                             id="name"
-                            label="name"
+                            label="Medicine name"
                             name='name'
                             type="text"
                             fullWidth
@@ -80,9 +96,24 @@ function MedReduxForm({ onhandlesubmit, onupdate }) {
                         />
                         <span style={{ color: 'red' }}>{errors.name && touched.name ? errors.name : null}  </span>
                         <TextField
+
                             margin="dense"
                             id="name"
-                            label="Price"
+                            label=""
+                            name='date'
+                            type="date"
+                            fullWidth
+                            variant="standard"
+                            value={values.date}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                        />
+                        <span style={{ color: 'red' }}>{errors.date && touched.date ? errors.date : null} </span>
+                        <TextField
+
+                            margin="dense"
+                            id="name"
+                            label="Medicine Price"
                             name='price'
                             type="text"
                             fullWidth
@@ -92,22 +123,6 @@ function MedReduxForm({ onhandlesubmit, onupdate }) {
                             onBlur={handleBlur}
                         />
                         <span style={{ color: 'red' }}>{errors.price && touched.price ? errors.price : null} </span>
-
-                        <TextField
-
-                            margin="dense"
-                            id="name"
-                            label="expiry"
-                            name='expiry'
-                            type="expiry"
-                            fullWidth
-                            variant="standard"
-                            value={values.expiry}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                        />
-                        <span style={{ color: 'red' }}>{errors.expiry && touched.expiry ? errors.expiry : null} </span>
-
                         <TextField
 
                             margin="dense"
@@ -124,6 +139,7 @@ function MedReduxForm({ onhandlesubmit, onupdate }) {
                             onBlur={handleBlur}
                         />
                         <span style={{ color: 'red' }}>{errors.desc && touched.desc ? errors.desc : null} </span>
+
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>
                             <Button type='submit' >submit</Button>
@@ -135,4 +151,4 @@ function MedReduxForm({ onhandlesubmit, onupdate }) {
     );
 }
 
-export default MedReduxForm;
+export default AdminppointmentForm;

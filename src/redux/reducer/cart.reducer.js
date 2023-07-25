@@ -22,7 +22,7 @@ export const cartreducer = (state = initState, action) => {
                 state.item.push(action.payload)
             }
 
-            console.log(state);
+            console.log(state.item);
             console.log(item);
             
             return {

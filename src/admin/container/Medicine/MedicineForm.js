@@ -8,9 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import * as yup from 'yup'
 import Button from '@mui/material/Button';
 
-
 function MedicineForm({ onhandlesubmit, onupdate }) {
-
     const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
@@ -28,25 +26,15 @@ function MedicineForm({ onhandlesubmit, onupdate }) {
         setOpen(false);
     };
 
-
-    let d = new Date();
+    var d = new Date()
     let nd = new Date(d.setDate(d.getDate() - 1))
 
     let medicineschema = yup.object({
         name: yup.string().required(),
-        date: yup.date().min(nd, "please entre a valid date").required(),
         price: yup.number().required(),
+        expiry: yup.date().min(nd, "Enter Valid Date").required("Please enter Date"),
         desc: yup.string().required()
-            .test('desc', 'maxmium 3 word allowed.',
-                function (val) {
-                    let arr = val.split(" ")
 
-                    if (arr.length > 3) {
-                        return false
-                    } else {
-                        return true
-                    }
-                })
     });
 
     const formik = useFormik({
@@ -54,8 +42,8 @@ function MedicineForm({ onhandlesubmit, onupdate }) {
 
         initialValues: {
             name: '',
-            date: '',
             price: '',
+            expiry: '',
             desc: ''
         },
         onSubmit: (values, action) => {
@@ -70,22 +58,19 @@ function MedicineForm({ onhandlesubmit, onupdate }) {
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = formik;
 
 
-
     return (
         <>
-            <h1>Medicine</h1>
             <Button variant="outlined" onClick={handleClickOpen}>
-                Open form Medicine
+                Open form medicine
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Medicine</DialogTitle>
+                <DialogTitle>medicine</DialogTitle>
                 <DialogContent>
                     <form onSubmit={handleSubmit}>
                         <TextField
-
                             margin="dense"
                             id="name"
-                            label="Medicine name"
+                            label="name"
                             name='name'
                             type="text"
                             fullWidth
@@ -96,24 +81,9 @@ function MedicineForm({ onhandlesubmit, onupdate }) {
                         />
                         <span style={{ color: 'red' }}>{errors.name && touched.name ? errors.name : null}  </span>
                         <TextField
-
                             margin="dense"
                             id="name"
-                            label=""
-                            name='date'
-                            type="date"
-                            fullWidth
-                            variant="standard"
-                            value={values.date}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                        />
-                        <span style={{ color: 'red' }}>{errors.date && touched.date ? errors.date : null} </span>
-                        <TextField
-
-                            margin="dense"
-                            id="name"
-                            label="Medicine Price"
+                            label="Price"
                             name='price'
                             type="text"
                             fullWidth
@@ -123,6 +93,21 @@ function MedicineForm({ onhandlesubmit, onupdate }) {
                             onBlur={handleBlur}
                         />
                         <span style={{ color: 'red' }}>{errors.price && touched.price ? errors.price : null} </span>
+
+                        <TextField
+                            margin="dense"
+                            id="expiry"
+                            label="Medicine Expiry Date"
+                            type="date"
+                            name='expiry'
+                            fullWidth
+                            variant="filled"
+                            value={values.expiry}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                        />
+                        <span className='error'>{errors.expiry && touched.expiry ? errors.expiry : ''}</span>
+
                         <TextField
 
                             margin="dense"
@@ -139,7 +124,6 @@ function MedicineForm({ onhandlesubmit, onupdate }) {
                             onBlur={handleBlur}
                         />
                         <span style={{ color: 'red' }}>{errors.desc && touched.desc ? errors.desc : null} </span>
-
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>
                             <Button type='submit' >submit</Button>
