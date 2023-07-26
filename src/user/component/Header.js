@@ -1,14 +1,36 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import Custombutton from '../container/Ul/Custombutton';
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useSelector } from 'react-redux';
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        right: -3,
+        top: 13,
+        border: `2px solid ${theme.palette.background.paper}`,
+        padding: '0 4px',
+    },
+}));
 
 function Header(props) {
 
     let loginstatus = localStorage.getItem('loginstatus')
+    let cartData = useSelector((state) => state.cart)
+    let cartCounet = 0;
+
+    if (cartData.item) {
+        cartCounet = cartData.item.reduce((acc, v, i) => acc + v.qty, 0)
+    }
 
     const handleremove = () => {
         localStorage.removeItem('loginstatus')
     }
+
+
 
 
     return (
@@ -18,6 +40,7 @@ function Header(props) {
                     <div className="contact-info d-flex align-items-center">
                         <i className="bi bi-envelope" /> <a href="mailto:contact@example.com">cityhospital@example.com</a>
                         <i className="bi bi-phone" /> +91 9988776655
+
                     </div>
                     <div className="d-none d-lg-flex social-links align-items-center">
                         <a href="#" className="twitter"><i className="bi bi-twitter" /></a>
@@ -44,7 +67,13 @@ function Header(props) {
                             <li><Link to="/contact" className="nav-link scrollto">Contact</Link></li>
                             <li><Link to="/medicine" className="nav-link scrollto">Medicine</Link></li>
                             <li><Link to="/formvalidation" className="nav-link scrollto">FormValidation</Link></li>
-                            {/* <li><Link to="/counter" className="nav-link scrollto">Counter</Link></li> */}
+                            <Link to="/cart">
+                                <IconButton aria-label="cart">
+                                    <StyledBadge badgeContent={cartCounet} color="secondary">
+                                        <ShoppingCartIcon />
+                                    </StyledBadge>
+                                </IconButton>
+                            </Link>
                             <Outlet />
                         </ul>
                         <i className="bi bi-list mobile-nav-toggle" />
