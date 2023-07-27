@@ -67,6 +67,7 @@ function Header(props) {
                             <li><Link to="/contact" className="nav-link scrollto">Contact</Link></li>
                             <li><Link to="/medicine" className="nav-link scrollto">Medicine</Link></li>
                             <li><Link to="/formvalidation" className="nav-link scrollto">FormValidation</Link></li>
+                            <li><Link to="/newmendicine" className="nav-link scrollto">New Medicine</Link></li>
                             <Link to="/cart">
                                 <IconButton aria-label="cart">
                                     <StyledBadge badgeContent={cartCounet} color="secondary">

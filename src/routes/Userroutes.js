@@ -19,40 +19,43 @@ import { configureStore } from '../redux/store';
 import { Provider } from 'react-redux';
 import Cart from '../user/container/cart/Cart';
 import { PersistGate } from 'redux-persist/integration/react'
+import New_Mendicine from '../user/container/newContainer/New_Mendicine';
 
 // import PrivateRoute from '../utils/PrivateRoute';
 
 function Userroutes(props) {
-    
+
     return (
         <>
-                    <Header />
-                    <Routes>
-                        <Route path='/' element={<Home />} />
-                        <Route path='/about' element={<About />} />
-                        <Route path='/appointment' element={<Appointment />} />
-                        <Route path='/contact' element={<Contact />} />
-                        <Route path='/departments' element={<Departments />} />
-                        <Route path='/doctors' element={<Doctors />} />
-                        <Route path='/doctor/:id' element={<Doctor />} />
-                        <Route path='/doctor/vistingdoctor' element={<VistingDoctor />} />
-                        <Route path='*' element={<NotFound />} />
+            <Header />
+            <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/about' element={<About />} />
+                <Route path='/appointment' element={<Appointment />} />
+                <Route path='/contact' element={<Contact />} />
+                <Route path='/departments' element={<Departments />} />
+                <Route path='/doctors' element={<Doctors />} />
+                <Route path='/doctor/:id' element={<Doctor />} />
+                <Route path='/doctor/vistingdoctor' element={<VistingDoctor />} />
+                <Route path='*' element={<NotFound />} />
 
-                        <Route path='/formvalidation' element={<FromValidation />} />
-                        <Route path='/cart' element={<Cart />} />
+                <Route path='/formvalidation' element={<FromValidation />} />
+                <Route path='/cart' element={<Cart />} />
+                <Route path='/newmendicine' element={<New_Mendicine />} />
+                
 
-                        <Route path='/doctor'>
-                            <Route path='/doctor/:id' element={<Doctor />} />
-                            <Route path='/doctor/vistingdoctor' element={<VistingDoctor />} />
-                        </Route>
+                <Route path='/doctor'>
+                    <Route path='/doctor/:id' element={<Doctor />} />
+                    <Route path='/doctor/vistingdoctor' element={<VistingDoctor />} />
+                </Route>
 
-                        <Route element={<PrivateRoute />}>
-                            <Route path='/medicine' element={<Medicine />} />
-                        </Route>
-                        <Route path='/auth' element={<Auth />} />
-                        <Route path='/counter' element={<Counter />} />
-                    </Routes>
-                    <Footer />
+                <Route element={<PrivateRoute />}>
+                    <Route path='/medicine' element={<Medicine />} />
+                </Route>
+                <Route path='/auth' element={<Auth />} />
+                <Route path='/counter' element={<Counter />} />
+            </Routes>
+            <Footer />
         </>
     );
 }
