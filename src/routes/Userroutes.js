@@ -23,13 +23,9 @@ import { PersistGate } from 'redux-persist/integration/react'
 // import PrivateRoute from '../utils/PrivateRoute';
 
 function Userroutes(props) {
-
-    let {store, persistor} = configureStore()
-
+    
     return (
         <>
-            <Provider store={store}>
-                <PersistGate loading={null} persistor= { persistor }>
                     <Header />
                     <Routes>
                         <Route path='/' element={<Home />} />
@@ -57,8 +53,6 @@ function Userroutes(props) {
                         <Route path='/counter' element={<Counter />} />
                     </Routes>
                     <Footer />
-                </PersistGate>
-            </Provider>
         </>
     );
 }
