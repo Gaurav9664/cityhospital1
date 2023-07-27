@@ -18,41 +18,46 @@ import Counter from '../user/container/Counter/Counter';
 import { configureStore } from '../redux/store';
 import { Provider } from 'react-redux';
 import Cart from '../user/container/cart/Cart';
+import { PersistGate } from 'redux-persist/integration/react'
+
 // import PrivateRoute from '../utils/PrivateRoute';
 
 function Userroutes(props) {
 
-    let store = configureStore()
+    let {store, persistor} = configureStore()
+
     return (
         <>
             <Provider store={store}>
-                <Header />
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/about' element={<About />} />
-                    <Route path='/appointment' element={<Appointment />} />
-                    <Route path='/contact' element={<Contact />} />
-                    <Route path='/departments' element={<Departments />} />
-                    <Route path='/doctors' element={<Doctors />} />
-                    <Route path='/doctor/:id' element={<Doctor />} />
-                    <Route path='/doctor/vistingdoctor' element={<VistingDoctor />} />
-                    <Route path='*' element={<NotFound />} />
-
-                    <Route path='/formvalidation' element={<FromValidation />} />
-                    <Route path='/cart' element={<Cart />} />
-
-                    <Route path='/doctor'>
+                <PersistGate loading={null} persistor= { persistor }>
+                    <Header />
+                    <Routes>
+                        <Route path='/' element={<Home />} />
+                        <Route path='/about' element={<About />} />
+                        <Route path='/appointment' element={<Appointment />} />
+                        <Route path='/contact' element={<Contact />} />
+                        <Route path='/departments' element={<Departments />} />
+                        <Route path='/doctors' element={<Doctors />} />
                         <Route path='/doctor/:id' element={<Doctor />} />
                         <Route path='/doctor/vistingdoctor' element={<VistingDoctor />} />
-                    </Route>
+                        <Route path='*' element={<NotFound />} />
 
-                    <Route element={<PrivateRoute />}>
-                        <Route path='/medicine' element={<Medicine />} />
-                    </Route>
-                    <Route path='/auth' element={<Auth />} />
-                    <Route path='/counter' element={<Counter />} />
-                </Routes>
-                <Footer />
+                        <Route path='/formvalidation' element={<FromValidation />} />
+                        <Route path='/cart' element={<Cart />} />
+
+                        <Route path='/doctor'>
+                            <Route path='/doctor/:id' element={<Doctor />} />
+                            <Route path='/doctor/vistingdoctor' element={<VistingDoctor />} />
+                        </Route>
+
+                        <Route element={<PrivateRoute />}>
+                            <Route path='/medicine' element={<Medicine />} />
+                        </Route>
+                        <Route path='/auth' element={<Auth />} />
+                        <Route path='/counter' element={<Counter />} />
+                    </Routes>
+                    <Footer />
+                </PersistGate>
             </Provider>
         </>
     );

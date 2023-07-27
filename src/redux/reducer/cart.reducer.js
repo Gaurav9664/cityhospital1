@@ -1,4 +1,3 @@
-import { act } from 'react-dom/test-utils';
 import * as Actiontypes from '../ActionTypes'
 
 const initState = {
@@ -22,8 +21,18 @@ export const cartreducer = (state = initState, action) => {
                 state.item.push(action.payload)
             }
 
-            console.log(state.item);
+            console.log(state);
             console.log(item);
+
+        case Actiontypes.INC_CART:
+
+            // if (item) {
+            //     let index = state.item.findIndex((v) => v.pid === action.payload.pid)
+            //     state.item[index].qty++;
+            // }
+
+            // let index = state.item.findIndex((v) => v.pid === action.payload)
+            // state.item[index].qty++;
 
             return {
                 item: state.item,
@@ -31,14 +40,25 @@ export const cartreducer = (state = initState, action) => {
                 error: null
             }
 
-        case Actiontypes.INC_CART:
-            let index = state.item.findIndex((v) => v.pid === action.payload)
-            state.item[index].qty++;
+        case Actiontypes.DEC_CART:
+            let index1 = state.item.findIndex((v) => v.pid === action.payload)
+
+            if (state.item[index1].qty > 1) {
+                state.item[index1].qty--;
+            }
+
 
             return {
                 item: state.item,
                 isloading: false,
                 error: null
+            }
+
+        case Actiontypes.REMOVE_CART:
+            console.log(action.payload);
+            return {
+                ...state,
+                item: state.item.filter((v) => v.pid != action.payload)
             }
         default:
             return state

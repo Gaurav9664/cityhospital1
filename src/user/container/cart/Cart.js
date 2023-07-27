@@ -2,7 +2,7 @@ import React from 'react';
 import Heading from '../Ul/Heading/Heading';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Ul/Button/Button';
-import { decrementCart, incrementCart } from '../../../redux/action/cart.action';
+import { decrementCart, deleteToCart, incrementCart } from '../../../redux/action/cart.action';
 
 function Cart(props) {
 
@@ -19,6 +19,9 @@ function Cart(props) {
         return fData
     })
 
+    let totalPrice = cartItem.reduce((acc, value) => acc + value.price * value.qty, 0);
+
+
     const hendaldicment = (id) => {
         dispatch(decrementCart(id))
     }
@@ -26,6 +29,12 @@ function Cart(props) {
     const hendalincment = (id) => {
         dispatch(incrementCart(id))
     }
+
+    const handleremove = (id) => {
+        console.log("remove", id);
+        dispatch(deleteToCart(id))
+    }
+
 
 
     return (
@@ -48,15 +57,15 @@ function Cart(props) {
                                             </div>
                                         </div>
                                         <div className="d-flex flex-row align-items-center">
-                                            <div style={{ width: 200 }}>
+                                            <div style={{ width: 50 }}>
                                                 <button onClick={() => hendaldicment(c.pid)}>-</button>
-                                                <h5 className="fw-normal mb-0">{c.qty}</h5>
+                                                <h5 className="mb-0">{c.qty}</h5>
                                                 <button onClick={() => hendalincment(c.pid)}>+</button>
                                             </div>
                                             <div style={{ width: 80 }}>
-                                                <h5 className="mb-0">{c.price}</h5>
+                                                <h5 className="mb-0">{c.qty * c.price}</h5>
                                             </div>
-                                            <a href="#!" style={{ color: '#cecece' }}><i className="fas fa-trash-alt" /></a>
+                                            <a href="#!" style={{ color: '#cecece' }} onClick={() => handleremove(c.pid)}><i className="fas fa-trash-alt" /></a>
                                         </div>
                                     </div>
                                 </div>
@@ -64,7 +73,12 @@ function Cart(props) {
                         )
                     })
                 }
-
+                <div className=" card-body card mb-3 ms-3 d-flex justify-content-between d-flex flex-row align-items-center">
+                    Total Amount Is:-
+                    <div style={{ width: 80 }}>
+                        <h5 className="mb-0">{totalPrice}</h5>
+                    </div>
+                </div>
 
             </div>
         </section >
