@@ -1,49 +1,57 @@
 import React, { useEffect, useState } from 'react';
-import Heading from '../Ul/Heading/Heading';
 import CustomCard from '../Ul/CustomCard';
 
 function New_Mendicine(props) {
-    const [mdata, setmdata] = useState(
-        
-    )
+    const [getdata, setgetdata] = useState([])
+    const [cart, setcardata] = useState([])
+    
+    console.log(cart);
 
     useEffect(() => {
-        setmdata(
+        try {
             fetch("http://localhost:3004/medicines")
-        .then((response) => response.json())
-        )
+                .then((response) => response.json())
+                .then((data) => setgetdata(data))
+                .catch((error) => console.log(error))
+        } catch (error) {
+            console.log(error);
+        }
     }, [])
 
 
+    const handleCart1 = (data) => {
+        console.log(data);
+        setcardata({...cart, data})
+    }
+
+
     return (
-        <section id="contact" className="contact">
+        <section id="medicines" className="medicines">
             <div className="container">
                 <div className="section-title">
-                    <Heading type='h2'>Medicine</Heading>
+                    <h2>Medicines</h2>
                     <p>Aenean enim orci, suscipit vitae sodales ac, semper in ex. Nunc aliquam eget nibh eu euismod. Donec dapibus
                         blandit quam volutpat sollicitudin. Aenean ac turpis ante. Mauris velit sapien, aliquet aliquet rhoncus quis,
                         luctus at neque. Mauris sit amet massa sed orci vehicula facilisis.</p>
                 </div>
-                <div className='container'>
-                    <div className='row'>
-                        <input type="text" placeholder='Search Medicine'  />
-                        {
-                            mdata.map((v, i) => {
-                                return (
-                                    <div className='col-md-4 g-3'>
-                                        <CustomCard
-                                            value={v}
-                                            btnval={'Add to Cart'}
-                                        />
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
+                <div className='row g-4'>
+                    {
+                        getdata.map((a, i) => {
+                            return (
+                                <div className='col-md-4 g-4'>
+                                    <CustomCard
+                                        value={a}
+                                        onclick1={handleCart1}
+                                        btnval={'Add to Cart'}
+                                    />
+                                </div>
+                            )
+                        })
+                    }
                 </div>
+
             </div>
         </section>
-
     );
 }
 
