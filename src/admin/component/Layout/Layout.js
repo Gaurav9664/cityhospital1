@@ -25,6 +25,7 @@ import MedicationIcon from '@mui/icons-material/Medication';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import { Dashboard } from '@mui/icons-material';
+import DepartureBoardIcon from '@mui/icons-material/DepartureBoard';
 
 const drawerWidth = 240;
 
@@ -51,6 +52,7 @@ const closedMixin = (theme) => ({
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
+  // color: 'red',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
@@ -113,14 +115,15 @@ export default function Layout({ children }) {
     { labal: 'Doctors', to: '/admin/Doctors', icon: <LocalHospitalIcon /> },
     { labal: 'Product', to: '/admin/Product', icon: <ProductionQuantityLimitsIcon /> },
     { labal: 'Medicine', to: '/admin/Medicine', icon: <MedicationIcon /> },
-    { labal: 'MedRedux', to: '/admin/MedRedux', icon: <MedicalServicesIcon /> }
-    // { labal: 'Appointment', to: '/Appointment', icon: <BookOnlineIcon /> },
+    { labal: 'MedRedux', to: '/admin/MedRedux', icon: <MedicalServicesIcon />},
+    { labal: 'Departments', to: '/admin/Departments', icon: <MedicalServicesIcon />}
+    // { labal: 'Appointment', to: '/Appointment', icon: <DepartureBoardIcon /> },
   ]
 
   return (
-    <Box sx={{ display: 'flex', color: 'grey' }}>
+    <Box sx={{ display: 'flex', color: 'red' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ backgroundColor: 'grey' }} >
+      <AppBar position="fixed" open={open} sx={{ backgroundColor: 'red', }} >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -135,7 +138,7 @@ export default function Layout({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Admin 
+            Mini variant drawer
           </Typography>
         </Toolbar>
       </AppBar>
@@ -151,7 +154,7 @@ export default function Layout({ children }) {
           {DoctorData.map((t, i) => (
             <ListItem
               key={i}
-              disablePadding
+              disablePadding 
               sx={{ display: 'block' }}
               to={t.to}
               component={Link}

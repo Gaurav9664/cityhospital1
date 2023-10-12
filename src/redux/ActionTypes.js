@@ -18,3 +18,22 @@ export const ADD_TO_CART = "ADD_TO_CART";
 export const INC_CART = "INC_CART";
 export const DEC_CART = "DEC_CART";
 export const REMOVE_CART = "REMOVE_CART";
+
+export const ADD_FAV = "ADD_FAV";
+export const REMOVE_TO_FAV = "REMOVE_TO_FAV";
+
+
+export const GET_DEPARTMENTS = "GET_DEPARTMENTS";
+export const ADD_DEPARTMENTS = "ADD_DEPARTMENTS";
+export const UPDATE_DEPARTMENTS = "UPDATE_DEPARTMENTS";
+export const DELETE_DEPARTMENTS = "DELETE_DEPARTMENTS";
+
+
+export const SIGNUP_REQUEST = "SIGNUP_REQUEST";
+export const EMIL_VERFICATION = "EMIL_VERFICATION"
+export const LOGIN_REQUEST = "LOGIN_REQUEST";
+export const LOGGED_IN= "LOGGED_IN"
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGGED_OUT = "LOGGED_OUT";
+export const FORGET_REQUEST = "FORGET_REQUEST";
+export const AUTH_ERROR = "AUTH_ERROR"
